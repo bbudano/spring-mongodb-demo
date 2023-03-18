@@ -1,0 +1,39 @@
+version: '3.8'
+
+networks:
+  spring-mongodb-demo:
+    name: spring-mongodb-demo
+    driver: bridge
+
+services:
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    volumes:
+      - spring-mongodb-demo-mongo-data:/data
+    networks:
+      - spring-mongodb-demo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: always
+    networks:
+      - spring-mongodb-demo
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=root
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+
+volumes:
+  spring-mongodb-demo-mongo-data:
+    name: spring-mongodb-demo-mongo-data
+    driver: local
