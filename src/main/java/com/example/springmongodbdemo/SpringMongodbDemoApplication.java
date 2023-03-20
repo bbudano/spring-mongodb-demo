@@ -3,13 +3,14 @@ package com.example.springmongodbdemo;
 import com.example.springmongodbdemo.author.model.Author;
 import com.example.springmongodbdemo.author.model.PersonalInfo;
 import com.example.springmongodbdemo.author.repository.AuthorRepository;
+import com.example.springmongodbdemo.book.model.Book;
+import com.example.springmongodbdemo.book.repository.BookRepository;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @SpringBootApplication
 public class SpringMongodbDemoApplication {
@@ -19,16 +20,16 @@ public class SpringMongodbDemoApplication {
     }
 
     @Bean
-    ApplicationRunner applicationRunner(AuthorRepository authorRepository) {
+    ApplicationRunner applicationRunner(AuthorRepository authorRepository, BookRepository bookRepository) {
         return args -> {
             authorRepository.deleteAll();
+            bookRepository.deleteAll();
 
-            var authors = List.of(
-                    new Author(null, new PersonalInfo("J.R.R.", "Tolkien", LocalDate.of(1892, 1, 3))),
-                    new Author(null, new PersonalInfo("Stephen", "King", LocalDate.of(1974, 9, 21)))
-            );
+            var tolkien = authorRepository.insert(new Author(new PersonalInfo("J.R.R.", "Tolkien", LocalDate.of(1892, 1, 3))));
+            var king = authorRepository.insert(new Author(new PersonalInfo("Stephen", "King", LocalDate.of(1974, 9, 21))));
 
-            authorRepository.insert(authors);
+            bookRepository.insert(new Book("Silmarillion", tolkien.getId()));
+            bookRepository.insert(new Book("Misery", king.getId()));
         };
     }
 
