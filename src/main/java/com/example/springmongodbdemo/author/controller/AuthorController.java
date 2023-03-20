@@ -29,4 +29,9 @@ public class AuthorController {
         return authorService.getAuthorById(id);
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteAuthor(@PathVariable String id) {
+        authorService.deleteAuthor(id);
+    }
+
 }

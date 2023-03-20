@@ -27,4 +27,10 @@ public class AuthorService {
                 .orElseThrow(() -> new RuntimeException("Author not found by id: " + id));
     }
 
+    public void deleteAuthor(String id) {
+        var author = getAuthorById(id);
+
+        authorRepository.delete(author);
+    }
+
 }
