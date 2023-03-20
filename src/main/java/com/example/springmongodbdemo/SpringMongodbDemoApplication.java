@@ -19,6 +19,8 @@ public class SpringMongodbDemoApplication {
     @Bean
     ApplicationRunner applicationRunner(AuthorRepository authorRepository) {
         return args -> {
+            authorRepository.deleteAll();
+
             var authors = List.of(
                     new Author(null, "J.R.R.", "Tolkien"),
                     new Author(null, "Stephen", "King")
