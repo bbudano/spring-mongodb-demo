@@ -13,6 +13,10 @@ public class AuthorService {
 
     private final AuthorRepository authorRepository;
 
+    public Author insertAuthor(Author author) {
+        return authorRepository.insert(author);
+    }
+
     public Page<Author> getAuthors(Pageable pageable) {
         return authorRepository.findAll(pageable);
     }
