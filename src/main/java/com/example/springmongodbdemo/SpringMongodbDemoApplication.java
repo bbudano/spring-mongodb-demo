@@ -28,8 +28,8 @@ public class SpringMongodbDemoApplication {
             var tolkien = authorRepository.insert(new Author(new PersonalInfo("J.R.R.", "Tolkien", LocalDate.of(1892, 1, 3))));
             var king = authorRepository.insert(new Author(new PersonalInfo("Stephen", "King", LocalDate.of(1974, 9, 21))));
 
-            bookRepository.insert(new Book("Silmarillion", tolkien.getId()));
-            bookRepository.insert(new Book("Misery", king.getId()));
+            bookRepository.insert(new Book("9780048231390", "Silmarillion", tolkien.getId()));
+            bookRepository.insert(new Book("9780670813643", "Misery", king.getId()));
         };
     }
 
